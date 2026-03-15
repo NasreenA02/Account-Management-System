@@ -1,9 +1,13 @@
-const { createClient } = require("@supabase/supabase-js");
-require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
+const generateToken = (user) => {
 
-module.exports = supabase;
+  return jwt.sign(
+    { id: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+};
+
+module.exports = generateToken;
